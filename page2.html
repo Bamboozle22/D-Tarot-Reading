@@ -2,200 +2,204 @@
 <html lang="en">
 
 <head>
-     
-    <meta charset="UTF-8" />
-     
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>Cleoford Sanggawa | Digital Tarot Reader</title>
-      <script src="https://cdn.tailwindcss.com"></script>
-      <style>
-        body {
-            background: url('background.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #f5e9c5;
-            font-family: 'Georgia', serif;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cleoford Sanggawa | Digital Tarot Reader</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #f5e9c5;
+      font-family: 'Georgia', serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-        .question-box {
-            background-color: rgba(30, 24, 10, 0.95);
-            padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 0 20px #bfa74f, 0 0 5px #000 inset;
-            animation: fadeIn 1s ease-out;
-            transition: transform 0.2s ease;
-        }
+    .question-box {
+      background-color: rgba(30, 24, 10, 0.95);
+      padding: 2rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 0 20px #bfa74f, 0 0 5px #000 inset;
+      animation: fadeIn 1s ease-out;
+      transition: transform 0.2s ease;
+    }
 
-        .question-box:active {
-            animation: shake 0.3s ease;
-        }
+    .question-box:active {
+      animation: shake 0.3s ease;
+    }
 
-        @keyframes shake {
-            0% {
-                transform: translateX(0px);
-            }
+    @keyframes shake {
+      0% {
+        transform: translateX(0px);
+      }
 
-            25% {
-                transform: translateX(-4px);
-            }
+      25% {
+        transform: translateX(-4px);
+      }
 
-            50% {
-                transform: translateX(4px);
-            }
+      50% {
+        transform: translateX(4px);
+      }
 
-            75% {
-                transform: translateX(-4px);
-            }
+      75% {
+        transform: translateX(-4px);
+      }
 
-            100% {
-                transform: translateX(0px);
-            }
-        }
+      100% {
+        transform: translateX(0px);
+      }
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
 
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
 
-        .glow {
-            color: #ffe58f;
-            text-shadow: 0 0 5px #bfa74f, 0 0 10px #a67c00;
-        }
+    .glow {
+      color: #ffe58f;
+      text-shadow: 0 0 5px #bfa74f, 0 0 10px #a67c00;
+    }
 
-        input::placeholder {
-            color: #666;
-        }
+    input::placeholder {
+      color: #666;
+    }
 
-        footer {
-            text-align: center;
-            color: #a79d77;
-            padding: 1rem;
-            font-size: 0.9rem;
-            background-color: rgba(10, 10, 10, 0.7);
-            border-top: 1px solid #bfa74f;
-        }
-    </style>
+    footer {
+      text-align: center;
+      color: #a79d77;
+      padding: 1rem;
+      font-size: 0.9rem;
+      background-color: rgba(10, 10, 10, 0.7);
+      border-top: 1px solid #bfa74f;
+    }
+  </style>
 </head>
 
 <body>
-      <!-- Background Audio -->
-      <audio id="background-audio" loop>
-           
-        <source src="audio.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-         
-    </audio>
+  <audio id="background-audio" loop>
+    <source src="audio.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
-      <header class="text-center py-6">
-            <h1 class="text-4xl glow font-bold">Tarot of Codex</h1>
-            <p class="italic text-yellow-200">Reveal what fate has veiled...</p>
-          </header>
+  <header class="text-center py-6">
+    <h1 class="text-4xl glow font-bold">Tarot of Codex</h1>
+    <p class="italic text-yellow-200">Reveal what fate has veiled...</p>
+  </header>
 
-      <main class="flex items-center justify-center flex-grow">
-            <div       class="question-box text-center max-w-md w-full"       onclick="rumble(); playAudioOnce()"       ontouchstart="playAudioOnce()"    >
-                  <h2 class="text-2xl mb-4 font-bold glow">Tarot Questionnaire</h2>
-                  <div id="question-container" class="mb-4 text-lg glow"></div>
-                  <input type="text" id="answer" class="w-full p-2 text-black rounded mb-4 transition" placeholder="Your answer..." />
-                  <button onclick="nextQuestion()" class="bg-yellow-700 hover:bg-yellow-600 transition px-4 py-2 rounded text-white shadow-md">Next</button>
-                </div>
-          </main>
+  <main class="flex items-center justify-center flex-grow">
+    <div class="question-box text-center max-w-md w-full" onclick="rumble(); playAudioOnce()" ontouchstart="playAudioOnce()">
+      <h2 class="text-2xl mb-4 font-bold glow">Tarot Questionnaire</h2>
+      <div id="question-container" class="mb-4 text-lg glow"></div>
+      <input type="text" id="answer" class="w-full p-2 text-black rounded mb-4 transition" placeholder="Your answer..." />
+      <button onclick="nextQuestion()" class="bg-yellow-700 hover:bg-yellow-600 transition px-4 py-2 rounded text-white shadow-md">Next</button>
+    </div>
+  </main>
 
-      <footer>
-            &copy;© 2025 Cleoford Sanggawa. All Right Reserve.
-          </footer>
+  <footer>
+    &copy; 2025 Cleoford Sanggawa. All Right Reserve.
+  </footer>
 
-      <script>
-        const allQuestions = [
-            "What is your current emotional state?",
-            "What do you seek clarity about?",
-            "What fears are you holding onto?",
-            "What energy surrounds you?",
-            "What do you desire from this reading?",
-            "What part of your past still echoes in your present?",
-            "What truth are you avoiding?",
-            "What inner strength have you forgotten?",
-            "What lesson must you embrace now?",
-            "What guidance do you wish to receive from the unknown?",
-        ];
+  <script>
+    const allQuestions = [
+      "What is your current emotional state?",
+      "What do you seek clarity about?",
+      "What fears are you holding onto?",
+      "What energy surrounds you?",
+      "What do you desire from this reading?",
+      "What part of your past still echoes in your present?",
+      "What truth are you avoiding?",
+      "What inner strength have you forgotten?",
+      "What lesson must you embrace now?",
+      "What guidance do you wish to receive from the unknown?",
+    ];
 
-        function getRandomQuestions(arr, n) {
-            const result = [];
-            const used = new Set();
-            while (result.length < n && used.size < arr.length) {
-                const idx = Math.floor(Math.random() * arr.length);
-                if (!used.has(idx)) {
-                    used.add(idx);
-                    result.push(arr[idx]);
-                }
-            }
-            return result;
-        }
+    function getRandomQuestions(arr, n) {
+      const result = [];
+      const used = new Set();
+      while (result.length < n && used.size < arr.length) {
+        const idx = Math.floor(Math.random() * arr.length);
+        if (!used.has(idx)) {
+          used.add(idx);
+          result.push(arr[idx]);
+        }
+      }
+      return result;
+    }
 
-        const sessionQuestions = getRandomQuestions(allQuestions, 5);
-        let currentIndex = 0;
-        const answers = [];
+    const sessionQuestions = getRandomQuestions(allQuestions, 5);
+    let currentIndex = 0;
+    const answers = [];
 
-        function showQuestion() {
-            document.getElementById("question-container").textContent = sessionQuestions[currentIndex];
-            const input = document.getElementById("answer");
-            input.value = "";
-            input.placeholder = "Your answer...";
-            input.classList.remove("ring", "ring-red-500");
-        }
+    function showQuestion() {
+      document.getElementById("question-container").textContent = sessionQuestions[currentIndex];
+      const input = document.getElementById("answer");
+      input.value = "";
+      input.placeholder = "Your answer...";
+      input.classList.remove("ring", "ring-red-500");
+    }
 
-        function nextQuestion() {
-            const inputElement = document.getElementById("answer");
-            const input = inputElement.value.trim();
+    function nextQuestion() {
+      const inputElement = document.getElementById("answer");
+      const input = inputElement.value.trim();
 
-            // Enhanced Validation: Must be 5+ characters and contain at least one letter
-            if (input.length < 5 || !/[a-zA-Z]/.test(input)) {
-                inputElement.classList.add("ring", "ring-red-500");
-                inputElement.placeholder = "Please enter a meaningful answer...";
-                inputElement.value = "";
-                return;
-            }
+      if (input.length < 5 || !/[a-zA-Z]/.test(input)) {
+        inputElement.classList.add("ring", "ring-red-500");
+        inputElement.placeholder = "Please enter a meaningful answer...";
+        inputElement.value = "";
+        return;
+      }
 
-            answers.push(input);
-            currentIndex++;
+      answers.push(input);
+      currentIndex++;
 
-            if (currentIndex < sessionQuestions.length) {
-                showQuestion();
-            } else {
-                localStorage.setItem("tarotAnswers", JSON.stringify(answers));
-                const cardNum = Math.floor(Math.random() * 78) + 1;
-                localStorage.setItem("tarotCard", cardNum);
-                window.location.href = "page3.html";
-            }
-        }
+      if (currentIndex < sessionQuestions.length) {
+        showQuestion();
+      } else {
+        localStorage.setItem("tarotAnswers", JSON.stringify(answers));
+        const cardNum = Math.floor(Math.random() * 78) + 1;
+        localStorage.setItem("tarotCard", cardNum);
+        window.location.replace("page3.html");
+      }
+    }
 
-        function rumble() {
-            const box = document.querySelector('.question-box');
-            box.classList.remove("shake");
-            void box.offsetWidth;
-            box.classList.add("shake");
-        }
+    function rumble() {
+      const box = document.querySelector('.question-box');
+      box.classList.remove("shake");
+      void box.offsetWidth;
+      box.classList.add("shake");
+    }
 
-        let audioPlayed = false;
+    let audioPlayed = false;
 
-        function playAudioOnce() {
-            if (!audioPlayed) {
-                const audio = document.getElementById("background-audio");
-                audio.play();
-                audioPlayed = true;
-            }
-        }
+    function playAudioOnce() {
+      if (!audioPlayed) {
+        const audio = document.getElementById("background-audio");
+        audio.play();
+        audioPlayed = true;
+      }
+    }
 
-        showQuestion();
-    </script>
+    // Strict back navigation prevention (Android/iOS/Desktop)
+    window.onload = () => {
+      history.pushState(null, "", location.href);
+      setInterval(() => history.pushState(null, "", location.href), 1000); // trap in place
+
+      window.onpopstate = () => {
+        history.pushState(null, "", location.href);
+      };
+    };
+
+    showQuestion();
+  </script>
 </body>
 
 </html>
