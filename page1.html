@@ -149,6 +149,12 @@
   </footer>
 
   <script>
+    // Prevent browser back button
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+      history.go(1);
+    };
+
     function seekKnowledge() {
       document.getElementById("question1").style.display = "none";
       document.getElementById("initialChoices").style.display = "none";
