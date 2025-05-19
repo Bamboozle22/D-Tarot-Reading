@@ -19,7 +19,7 @@
     body {
       font-family: 'Cormorant Garamond', serif;
       background-color: #0f0d06;
-      background-image: url('background.jpg'); /* Medieval paper texture */
+      background-image: url('background.jpg');
       background-size: cover;
       background-attachment: fixed;
       color: #e6dcc4;
@@ -168,6 +168,13 @@
   </audio>
 
   <script>
+    // Prevent going back
+    history.pushState(null, document.title, location.href);
+    window.addEventListener('popstate', function () {
+      history.pushState(null, document.title, location.href);
+    });
+
+    // Audio autoplay handler
     window.addEventListener('load', function () {
       const audio = document.getElementById('bg-music');
       const playPromise = audio.play();
