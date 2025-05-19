@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cleoford Sanggawa | Tarot Reading </title>
+
+  <!-- Gothic fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Cormorant+Garamond:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background-color: #0f0d06;
+      background-image: url('background.jpg'); /* Medieval paper texture */
+      background-size: cover;
+      background-attachment: fixed;
+      color: #e6dcc4;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 30px;
+      background: rgba(10, 10, 10, 0.9);
+      border: 3px solid #7c6b2d;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(191, 167, 79, 0.3);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .profile-pic {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #7c6b2d;
+      box-shadow: 0 0 12px #7c6b2d;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-family: 'UnifrakturCook', cursive;
+      font-size: 38px;
+      color: #bda375;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 6px #000;
+    }
+
+    .sub {
+      color: #d6c79d;
+      font-style: italic;
+      font-size: 18px;
+    }
+
+    .proverb {
+      font-style: italic;
+      font-size: 18px;
+      color: #e6dcc4;
+      margin: 20px 0;
+      border-left: 4px solid #7c6b2d;
+      padding-left: 15px;
+    }
+
+    .start-button {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #302610, #1a1305);
+      color: #fcebd3;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      font-family: 'UnifrakturCook', cursive;
+      border: 2px solid #7c6b2d;
+      transition: all 0.3s ease;
+    }
+
+    .start-button:hover {
+      background: #3a2e12;
+      transform: scale(1.05);
+      box-shadow: 0 0 12px #bfa74f;
+      color: #fff;
+    }
+
+    section {
+      margin-bottom: 35px;
+      padding: 20px;
+      background: rgba(20, 15, 10, 0.7);
+      border: 1px solid #3e2f15;
+      border-radius: 8px;
+    }
+
+    section h2 {
+      font-family: 'UnifrakturCook', cursive;
+      color: #c09456;
+      font-size: 26px;
+      border-bottom: 1px dashed #7c6b2d;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      padding: 5px 0;
+    }
+
+    .social-icons {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .icon {
+      display: inline-block;
+      margin: 0 10px;
+      font-size: 24px;
+      color: #fcebd3;
+      background: #1a1308;
+      border-radius: 50%;
+      padding: 10px;
+      width: 44px;
+      height: 44px;
+      text-align: center;
+      line-height: 22px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 1px solid #7c6b2d;
+    }
+
+    .icon:hover {
+      background: #7c6b2d;
+      color: #fff;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #a89275;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <audio id="bg-music" autoplay loop>
+    <source src="audio.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    window.addEventListener('load', function () {
+      const audio = document.getElementById('bg-music');
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          document.body.addEventListener('click', () => {
+            audio.play();
+          }, { once: true });
+        });
+      }
+    });
+  </script>
+
+  <div class="container">
+    <header>
+      <img src="profile.jpg" alt="Cleoford Sanggawa" class="profile-pic">
+      <h1>Cleoford Sanggawa</h1>
+      <p class="sub">DIGITAL TAROT READING </p>
+      <p class="proverb">“Trust in the Lord with all thine heart; and lean not unto thine own understanding...”<br>– Proverbs 3:5-6</p>
+      <a href="page1.html" class="start-button">Enter</a>
+    </header>
+
+    <section>
+      <h2>About Me</h2>
+      <p>A wanderer in realms of code and shadow. I study the arcana of machines and summon creativity into interfaces that whisper to the soul.</p>
+    </section>
+
+    <section>
+      <h2>Hobbies</h2>
+      <ul>
+        <li>Exploring digital ruins (gaming)</li>
+        <li>Conjuring illustrations</li>
+        <li>Catching ghostlight (photography)</li>
+        <li>Building cursed code for fun</li>
+        <li>Lo-fi and ritualistic jazz chants</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <ul>
+        <li><strong>Elementary:</strong> Malipay Elementary School</li>
+        <li><strong>High School:</strong> Camella National High School</li>
+        <li><strong>College:</strong> Cavite State University – BS Computer Science</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <div class="social-icons">
+        <a class="icon" href="https://www.facebook.com/share/1AoeaHayot/" target="_blank">☠️</a>
+        <a class="icon" href="mailto:cleoford.sanggawa@example.com">✉️</a>
+        <a class="icon" href="https://github.com/cleofordsanggawa" target="_blank">⚙️</a>
+      </div>
+    </section>
+
+    <footer>
+      &copy; 2025 Cleoford Sanggawa. All Right Reserve.
+    </footer>
+  </div>
+</body>
+
+</html>

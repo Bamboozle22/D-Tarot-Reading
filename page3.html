@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cleoford Sanggawa | Digital Tarot Reading </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Libre+Baskerville&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Cinzel Decorative', serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #e6dcc4;
+        }
+
+        h1 {
+            color: #bfa74f;
+            font-size: 4rem;
+            text-shadow: 2px 2px #1a1a1a;
+        }
+
+        .golden-frame {
+            border: 2px solid #7c6b2d;
+            background: linear-gradient(to bottom right, rgba(40, 33, 10, 0.85), rgba(20, 17, 5, 0.85));
+            box-shadow: 0 0 10px rgba(191, 167, 79, 0.3);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0.5rem;
+            position: relative;
+        }
+
+        .destiny-text {
+            color: #bfa74f;
+            font-size: 1.25rem;
+            text-align: center;
+            margin-top: 0.5rem;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        .draw-btn {
+            background-color: #7c6b2d;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 1.25rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: block;
+            margin: 2rem auto;
+        }
+
+        .draw-btn:hover:not(:disabled) {
+            background-color: #a88c3d;
+        }
+
+        .draw-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .tarot-card {
+            background: linear-gradient(to bottom, #1f1a0e, #0f0d06);
+            border: 2px solid #a88c3d;
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 0 12px rgba(191, 167, 79, 0.5);
+            text-align: center;
+            max-width: 300px;
+            margin: 2rem auto;
+            cursor: pointer;
+        }
+
+        .tarot-label {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1rem;
+            color: #c8b169;
+            text-shadow: 1px 1px #000;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .tarot-img {
+            border: 1px solid #776129;
+            border-radius: 0.5rem;
+            transition: transform 0.3s ease;
+            max-width: 100%;
+        }
+
+        .tarot-img:hover {
+            transform: scale(1.05);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 10, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: #222;
+            border: 2px solid #a88c3d;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            color: #e6dcc4;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #776129;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            font-size: 2rem;
+            color: #bfa74f;
+            cursor: pointer;
+        }
+
+        .footer {
+            font-family: monospace;
+            background-color: rgba(22, 22, 22, 0.8);
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #d6c79d;
+            border-top: 1px solid #3e2f15;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+
+<body class="p-4">
+    <h1 class="text-center">Tarot Reading</h1>
+
+    <button id="drawBtn" class="draw-btn" onclick="drawCard()">Draw a Tarot Card</button>
+
+    <div id="grid"></div>
+
+    <audio id="bgAudio" autoplay loop muted>
+        <source src="audio.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- Modal -->
+    <div id="modal" class="modal hidden" style="display:none;">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <img id="modalImg" src="" alt="Tarot Card" />
+            <p id="modalDesc" class="destiny-text"></p>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const audio = document.getElementById("bgAudio");
+            audio.muted = false;
+            audio.play().catch(e => console.log("Audio autoplay blocked:", e));
+        });
+
+        const tarotDescriptions = [
+            "The Fool: Beginnings, innocence, spontaneity, a free spirit.",
+            "The Magician: Manifestation, resourcefulness, power, inspired action.",
+            "The High Priestess: Intuition, sacred knowledge, divine feminine, the subconscious mind.",
+            "The Empress: Femininity, beauty, nature, nurturing, abundance.",
+            "The Emperor: Authority, structure, control, father figure.",
+            "The Hierophant: Tradition, spiritual wisdom, religious beliefs, conformity.",
+            "The Lovers: Love, harmony, partnerships, choices, alignment of values.",
+            "The Chariot: Willpower, determination, control, success through effort.",
+            "Strength: Courage, persuasion, inner strength, compassion.",
+            "The Hermit: Soul-searching, introspection, being alone, inner guidance.",
+            "Wheel of Fortune: Luck, karma, cycles, turning points, destiny.",
+            "Justice: Fairness, truth, law, cause and effect, accountability.",
+            "The Hanged Man: Pause, surrender, letting go, new perspectives.",
+            "Death: Endings, transformation, transition, letting go.",
+            "Temperance: Balance, moderation, purpose, patience, meaning.",
+            "The Devil: Shadow self, addiction, restriction, sexuality, temptation.",
+            "The Tower: Sudden change, upheaval, chaos, revelation, awakening.",
+            "The Star: Hope, faith, renewal, spirituality, inspiration.",
+            "The Moon: Illusion, fear, anxiety, subconscious, confusion.",
+            "The Sun: Positivity, success, vitality, joy, warmth.",
+            "Judgement: Rebirth, inner calling, reflection, reckoning.",
+            "The World: Completion, achievement, travel, integration, wholeness.",
+            "Ace of Wands: Inspiration, new opportunities, growth, potential.",
+            "Two of Wands: Planning, decisions, discovery, progress.",
+            "Three of Wands: Expansion, foresight, overseas opportunities.",
+            "Four of Wands: Celebration, harmony, homecoming, community.",
+            "Five of Wands: Conflict, competition, tension, rivalry.",
+            "Six of Wands: Victory, success, public recognition, progress.",
+            "Seven of Wands: Perseverance, defense, maintaining control.",
+            "Eight of Wands: Rapid movement, progress, quick decisions.",
+            "Nine of Wands: Resilience, persistence, test of faith, boundaries.",
+            "Ten of Wands: Burden, responsibility, hard work, stress.",
+            "Page of Wands: Enthusiasm, exploration, discovery, free spirit.",
+            "Knight of Wands: Action, adventure, impulsiveness, passion.",
+            "Queen of Wands: Confidence, independence, determination, vibrancy.",
+            "King of Wands: Leadership, vision, entrepreneurship, honor.",
+            "Ace of Cups: New feelings, spirituality, compassion, love.",
+            "Two of Cups: Unity, partnership, connection, mutual attraction.",
+            "Three of Cups: Friendship, celebration, community, joy.",
+            "Four of Cups: Apathy, contemplation, reevaluation, disconnection.",
+            "Five of Cups: Loss, grief, regret, focusing on the negative.",
+            "Six of Cups: Nostalgia, childhood, innocence, memories.",
+            "Seven of Cups: Choices, imagination, illusion, wishful thinking.",
+            "Eight of Cups: Withdrawal, seeking truth, walking away.",
+            "Nine of Cups: Contentment, satisfaction, emotional fulfillment.",
+            "Ten of Cups: Harmony, alignment, happy family, lasting happiness.",
+            "Page of Cups: Creative opportunities, curiosity, surprise, intuition.",
+            "Knight of Cups: Romance, charm, imagination, idealism.",
+            "Queen of Cups: Compassion, calm, comfort, emotional security.",
+            "King of Cups: Emotional balance, diplomacy, generosity, wisdom.",
+            "Ace of Swords: Breakthrough, clarity, new ideas, truth.",
+            "Two of Swords: Indecision, stalemate, choices, blocked emotions.",
+            "Three of Swords: Heartbreak, sorrow, grief, betrayal.",
+            "Four of Swords: Rest, recovery, contemplation, renewal.",
+            "Five of Swords: Conflict, defeat, betrayal, winning at a cost.",
+            "Six of Swords: Transition, change, moving on, rite of passage.",
+            "Seven of Swords: Deception, betrayal, strategy, running away.",
+            "Eight of Swords: Restriction, fear, paralysis, imprisonment.",
+            "Nine of Swords: Anxiety, despair, nightmares, inner turmoil.",
+            "Ten of Swords: Painful endings, betrayal, loss, crisis.",
+            "Page of Swords: Curiosity, ideas, mental energy, vigilance.",
+            "Knight of Swords: Action, ambition, drive, impulsiveness.",
+            "Queen of Swords: Independence, perception, clear boundaries, truth.",
+            "King of Swords: Intellectual power, truth, authority, analytical thinking.",
+            "Ace of Pentacles: Opportunity, prosperity, new beginnings, manifestation.",
+            "Two of Pentacles: Balance, adaptability, juggling priorities.",
+            "Three of Pentacles: Teamwork, collaboration, skill development.",
+            "Four of Pentacles: Security, control, saving, materialism.",
+            "Five of Pentacles: Hardship, loss, isolation, financial worry.",
+            "Six of Pentacles: Generosity, charity, giving and receiving.",
+            "Seven of Pentacles: Long-term view, perseverance, investment.",
+            "Eight of Pentacles: Diligence, mastery, apprenticeship, hard work.",
+            "Nine of Pentacles: Self-sufficiency, luxury, financial independence.",
+            "Ten of Pentacles: Legacy, inheritance, family, long-term success.",
+            "Page of Pentacles: Ambition, planning, new ventures, study.",
+            "Knight of Pentacles: Efficiency, responsibility, hard work, routine.",
+            "Queen of Pentacles: Nurturing, practicality, security, generosity.",
+            "King of Pentacles: Wealth, business, leadership, abundance."
+        ];
+
+        const romanNumerals = [...Array(78).keys()].map(i => {
+            const romanMap = [
+                "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
+                "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
+                "XXI"
+            ];
+            return romanMap[i] || `Card ${i + 1}`;
+        });
+
+        const grid = document.getElementById("grid");
+        let drawn = false;
+
+        function drawCard() {
+            if (drawn) return;
+
+            drawn = true;
+            const i = Math.floor(Math.random() * 78);
+            const imgPath = `${i + 1}.jpg`; // Make sure images 1.jpg, 2.jpg, ... 78.jpg exist
+            const desc = tarotDescriptions[i];
+            const roman = romanNumerals[i];
+
+            grid.innerHTML = `
+                <div class="tarot-card cursor-pointer" onclick="openModal('${imgPath}', \`${desc}\`)">
+                    <div class="tarot-label">${roman}</div>
+                    <img src="${imgPath}" alt="Tarot Card ${i + 1}" class="tarot-img" />
+                </div>
+            `;
+
+            const drawBtn = document.getElementById("drawBtn");
+            drawBtn.disabled = true;
+            drawBtn.classList.add("opacity-50", "cursor-not-allowed");
+
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 30000); // Redirect after 30 seconds
+        }
+
+        function openModal(img, desc) {
+            const modal = document.getElementById("modal");
+            document.getElementById("modalImg").src = img;
+            document.getElementById("modalImg").alt = "Tarot Card Image";
+            document.getElementById("modalDesc").innerText = desc;
+            modal.style.display = "flex";
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("modal");
+            modal.style.display = "none";
+        }
+    </script>
+
+    <div class="footer">
+        &copy; © 2025 Cleoford Sanggawa. All Right Reserve.
+    </div>
+</body>
+
+</html>

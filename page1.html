@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cleoford Sanggawa | Digital Tarot Reading </title>
+
+  <!-- Gothic fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Cormorant+Garamond:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: 'Cormorant Garamond', serif;
+      background-color: #0f0d06;
+      overflow: hidden;
+    }
+
+    body {
+      background-image: url('background.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 10, 10, 0.5);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #e6dcc4;
+      padding: 40px;
+      backdrop-filter: blur(3px);
+    }
+
+    h1 {
+      font-family: 'UnifrakturCook', cursive;
+      font-size: 3.5rem;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+      color: #bda375;
+      text-shadow: 4px 4px 8px #000, 0 0 12px #7c6b2d;
+    }
+
+    .tarot-question {
+      font-size: 1.3rem;
+      margin: 20px 0;
+      max-width: 600px;
+      color: #d6c79d;
+      text-shadow: 2px 2px 4px #000;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .choice-button {
+      padding: 14px 30px;
+      font-size: 17px;
+      font-weight: bold;
+      color: #fcebd3;
+      background: linear-gradient(to bottom right, rgba(40, 33, 10, 0.85), rgba(20, 17, 5, 0.85));
+      border: 2px solid #7a2c13;
+      border-radius: 12px;
+      cursor: pointer;
+      margin: 10px;
+      box-shadow: 0 0 10px rgba(191, 167, 79, 0.3);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-family: 'UnifrakturCook', cursive;
+    }
+
+    .choice-button:hover {
+      background: #2a1a11;
+      transform: scale(1.05);
+      color: #fff;
+    }
+
+    .second-question,
+    .agreement {
+      display: none;
+      margin-top: 30px;
+    }
+
+    .agreement label {
+      font-size: 0.9rem;
+      color: #d6c79d;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      background: rgba(18, 18, 18, 0.9);
+      color: #d6c79d;
+      font-size: 14px;
+      padding: 10px;
+      font-family: 'Cormorant Garamond', serif;
+      border-top: 1px solid #3e2f15;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="overlay">
+    <h1>Tarot of Codex</h1>
+
+    <p class="tarot-question" id="question1">
+      The Veil parts… a voice whispers:<br><br>
+      “You stand at a crossroads. Will you walk the path of knowledge or hide in the shadow of doubt?”
+    </p>
+
+    <div id="initialChoices">
+      <button class="choice-button" onclick="seekKnowledge()">I seek knowledge</button>
+      <button class="choice-button" onclick="denyPath()">I turn away</button>
+    </div>
+
+    <div class="second-question" id="question2">
+      <p class="tarot-question">
+        “The truth awaits. Are you prepared to bear the weight of what lies beyond?”
+      </p>
+      <button class="choice-button" onclick="showAgreement()">Yes, I am ready</button>
+    </div>
+
+    <div class="agreement" id="agreementSection">
+      <p class="tarot-question">You must accept the terms to proceed:</p>
+      <label><input type="checkbox" id="agreeCheck" /> I agree to walk this path with full understanding.</label><br><br>
+      <button class="choice-button" onclick="finalProceed()">Enter the Codex</button>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Cleoford Sanggawa. All Right Reserve.
+  </footer>
+
+  <script>
+    function seekKnowledge() {
+      document.getElementById("question1").style.display = "none";
+      document.getElementById("initialChoices").style.display = "none";
+      document.getElementById("question2").style.display = "block";
+    }
+
+    function denyPath() {
+      alert("The path fades... You are cast into the void.");
+      window.location.href = "https://www.google.com"; // Replace with your own URL or goodbye page
+    }
+
+    function showAgreement() {
+      document.getElementById("question2").style.display = "none";
+      document.getElementById("agreementSection").style.display = "block";
+    }
+
+    function finalProceed() {
+      if (document.getElementById("agreeCheck").checked) {
+        window.location.href = "page2.html";
+      } else {
+        alert("You must agree to the terms before proceeding.");
+      }
+    }
+  </script>
+
+</body>
+
+</html>
