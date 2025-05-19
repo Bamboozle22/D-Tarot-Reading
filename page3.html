@@ -176,88 +176,15 @@
             const audio = document.getElementById("bgAudio");
             audio.muted = false;
             audio.play().catch(e => console.log("Audio autoplay blocked:", e));
+
+            // Block back navigation
+            history.pushState(null, null, location.href);
+            window.addEventListener('popstate', function (event) {
+                history.pushState(null, null, location.href);
+            });
         });
 
-        const tarotDescriptions = [
-            "The Fool: Beginnings, innocence, spontaneity, a free spirit.",
-            "The Magician: Manifestation, resourcefulness, power, inspired action.",
-            "The High Priestess: Intuition, sacred knowledge, divine feminine, the subconscious mind.",
-            "The Empress: Femininity, beauty, nature, nurturing, abundance.",
-            "The Emperor: Authority, structure, control, father figure.",
-            "The Hierophant: Tradition, spiritual wisdom, religious beliefs, conformity.",
-            "The Lovers: Love, harmony, partnerships, choices, alignment of values.",
-            "The Chariot: Willpower, determination, control, success through effort.",
-            "Strength: Courage, persuasion, inner strength, compassion.",
-            "The Hermit: Soul-searching, introspection, being alone, inner guidance.",
-            "Wheel of Fortune: Luck, karma, cycles, turning points, destiny.",
-            "Justice: Fairness, truth, law, cause and effect, accountability.",
-            "The Hanged Man: Pause, surrender, letting go, new perspectives.",
-            "Death: Endings, transformation, transition, letting go.",
-            "Temperance: Balance, moderation, purpose, patience, meaning.",
-            "The Devil: Shadow self, addiction, restriction, sexuality, temptation.",
-            "The Tower: Sudden change, upheaval, chaos, revelation, awakening.",
-            "The Star: Hope, faith, renewal, spirituality, inspiration.",
-            "The Moon: Illusion, fear, anxiety, subconscious, confusion.",
-            "The Sun: Positivity, success, vitality, joy, warmth.",
-            "Judgement: Rebirth, inner calling, reflection, reckoning.",
-            "The World: Completion, achievement, travel, integration, wholeness.",
-            "Ace of Wands: Inspiration, new opportunities, growth, potential.",
-            "Two of Wands: Planning, decisions, discovery, progress.",
-            "Three of Wands: Expansion, foresight, overseas opportunities.",
-            "Four of Wands: Celebration, harmony, homecoming, community.",
-            "Five of Wands: Conflict, competition, tension, rivalry.",
-            "Six of Wands: Victory, success, public recognition, progress.",
-            "Seven of Wands: Perseverance, defense, maintaining control.",
-            "Eight of Wands: Rapid movement, progress, quick decisions.",
-            "Nine of Wands: Resilience, persistence, test of faith, boundaries.",
-            "Ten of Wands: Burden, responsibility, hard work, stress.",
-            "Page of Wands: Enthusiasm, exploration, discovery, free spirit.",
-            "Knight of Wands: Action, adventure, impulsiveness, passion.",
-            "Queen of Wands: Confidence, independence, determination, vibrancy.",
-            "King of Wands: Leadership, vision, entrepreneurship, honor.",
-            "Ace of Cups: New feelings, spirituality, compassion, love.",
-            "Two of Cups: Unity, partnership, connection, mutual attraction.",
-            "Three of Cups: Friendship, celebration, community, joy.",
-            "Four of Cups: Apathy, contemplation, reevaluation, disconnection.",
-            "Five of Cups: Loss, grief, regret, focusing on the negative.",
-            "Six of Cups: Nostalgia, childhood, innocence, memories.",
-            "Seven of Cups: Choices, imagination, illusion, wishful thinking.",
-            "Eight of Cups: Withdrawal, seeking truth, walking away.",
-            "Nine of Cups: Contentment, satisfaction, emotional fulfillment.",
-            "Ten of Cups: Harmony, alignment, happy family, lasting happiness.",
-            "Page of Cups: Creative opportunities, curiosity, surprise, intuition.",
-            "Knight of Cups: Romance, charm, imagination, idealism.",
-            "Queen of Cups: Compassion, calm, comfort, emotional security.",
-            "King of Cups: Emotional balance, diplomacy, generosity, wisdom.",
-            "Ace of Swords: Breakthrough, clarity, new ideas, truth.",
-            "Two of Swords: Indecision, stalemate, choices, blocked emotions.",
-            "Three of Swords: Heartbreak, sorrow, grief, betrayal.",
-            "Four of Swords: Rest, recovery, contemplation, renewal.",
-            "Five of Swords: Conflict, defeat, betrayal, winning at a cost.",
-            "Six of Swords: Transition, change, moving on, rite of passage.",
-            "Seven of Swords: Deception, betrayal, strategy, running away.",
-            "Eight of Swords: Restriction, fear, paralysis, imprisonment.",
-            "Nine of Swords: Anxiety, despair, nightmares, inner turmoil.",
-            "Ten of Swords: Painful endings, betrayal, loss, crisis.",
-            "Page of Swords: Curiosity, ideas, mental energy, vigilance.",
-            "Knight of Swords: Action, ambition, drive, impulsiveness.",
-            "Queen of Swords: Independence, perception, clear boundaries, truth.",
-            "King of Swords: Intellectual power, truth, authority, analytical thinking.",
-            "Ace of Pentacles: Opportunity, prosperity, new beginnings, manifestation.",
-            "Two of Pentacles: Balance, adaptability, juggling priorities.",
-            "Three of Pentacles: Teamwork, collaboration, skill development.",
-            "Four of Pentacles: Security, control, saving, materialism.",
-            "Five of Pentacles: Hardship, loss, isolation, financial worry.",
-            "Six of Pentacles: Generosity, charity, giving and receiving.",
-            "Seven of Pentacles: Long-term view, perseverance, investment.",
-            "Eight of Pentacles: Diligence, mastery, apprenticeship, hard work.",
-            "Nine of Pentacles: Self-sufficiency, luxury, financial independence.",
-            "Ten of Pentacles: Legacy, inheritance, family, long-term success.",
-            "Page of Pentacles: Ambition, planning, new ventures, study.",
-            "Knight of Pentacles: Efficiency, responsibility, hard work, routine.",
-            "Queen of Pentacles: Nurturing, practicality, security, generosity.",
-            "King of Pentacles: Wealth, business, leadership, abundance."
-        ];
+        const tarotDescriptions = [...]; // (Truncated for brevity — keep the full array from your original code)
 
         const romanNumerals = [...Array(78).keys()].map(i => {
             const romanMap = [
@@ -276,7 +203,7 @@
 
             drawn = true;
             const i = Math.floor(Math.random() * 78);
-            const imgPath = `${i + 1}.jpg`; // Make sure images 1.jpg, 2.jpg, ... 78.jpg exist
+            const imgPath = `${i + 1}.jpg`;
             const desc = tarotDescriptions[i];
             const roman = romanNumerals[i];
 
@@ -292,8 +219,8 @@
             drawBtn.classList.add("opacity-50", "cursor-not-allowed");
 
             setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 30000); // Redirect after 30 seconds
+                location.replace('index.html');
+            }, 30000);
         }
 
         function openModal(img, desc) {
